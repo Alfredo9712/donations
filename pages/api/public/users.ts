@@ -7,9 +7,9 @@ const handler = nc()
     await dbConnect();
     next();
   })
-  .get((req: NextApiRequest, res: NextApiResponse) => {
-    res.send("hi");
-  })
+  // @desc      create a new user
+  // @route     post /api/public/users
+  // @access    Public
   .post(async (req: NextApiRequest, res: NextApiResponse) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
