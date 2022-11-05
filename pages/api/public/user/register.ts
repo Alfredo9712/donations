@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
-import dbConnect from "../../../src/middleware/dbConnect";
-import User from "../../../src/models/userModel";
+import dbConnect from "../../../../src/middleware/dbConnect";
+import User from "../../../../src/models/userModel";
 import bcrypt from "bcrypt";
 
 const saltRounds = 10;

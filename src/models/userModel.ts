@@ -14,6 +14,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+    unique: true,
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
