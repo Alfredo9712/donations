@@ -1,6 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import nc from "next-connect";
-import dbConnect from "../../../../src/middleware/dbConnect";
 import User from "../../../../src/models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -10,8 +8,11 @@ import defaultHandler from "../../../../src/middleware/defaultHandler";
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 
-const handler = defaultHandler.post(
-  async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = defaultHandler
+  // @desc      Register a new user
+  // @route     Post /api/public/user/register
+  // @access    Publi
+  .post(async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, email, password } = req.body;
     const user = await User.findOne({ email });
 
@@ -49,7 +50,6 @@ const handler = defaultHandler.post(
     } catch (error) {
       return res.status(400).json(error);
     }
-  }
-);
+  });
 
 export default handler;
