@@ -1,4 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { ExtendedNextApiRequest } from "../../types/ExtendedNextApiRequest";
+import { NextApiResponse } from "next";
 import User from "../models/userModel";
 import jwt from "jsonwebtoken";
 import defaultHandler from "./defaultHandler";
@@ -8,9 +9,6 @@ interface JWTPayload {
   email: string;
 }
 
-export interface ExtendedNextApiRequest extends NextApiRequest {
-  id: string;
-}
 const authMiddlewareHandler = defaultHandler;
 
 authMiddlewareHandler.use(
@@ -22,7 +20,6 @@ authMiddlewareHandler.use(
         code: 100,
         message: "Not Authorized",
       });
-    // if token is invalid return 401
     try {
       const decoded = jwt.verify(
         token,
@@ -40,6 +37,7 @@ authMiddlewareHandler.use(
 
       next(); // call to proceed to next in chain
     } catch (error) {
+      // if token is invalid return 401
       return res.status(401).json({
         code: 100,
         message: "Not Authorized",

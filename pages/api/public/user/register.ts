@@ -10,8 +10,8 @@ const salt = bcrypt.genSaltSync(saltRounds);
 
 const handler = defaultHandler
   // @desc      Register a new user
-  // @route     Post /api/public/user/register
-  // @access    Publi
+  // @route     POST /api/public/user/register
+  // @access    Public
   .post(async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, email, password } = req.body;
     const user = await User.findOne({ email });
