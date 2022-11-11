@@ -4,7 +4,7 @@ import privateHandler from "../../../../src/middleware/authMiddlewareHandler";
 import User from "../../../../src/models/userModel";
 const handler = privateHandler
   // @desc      Return user requesting the API
-  // @route     GET /api/public/user
+  // @route     GET /api/private/user
   // @access    Private
   .get(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
     const user = await User.findById({ _id: req.id });
