@@ -1,6 +1,6 @@
 import nc from "next-connect";
-
 import cookie from "cookie";
+
 import { NextApiRequest, NextApiResponse } from "next";
 const handler = nc().post((req: NextApiRequest, res: NextApiResponse) => {
   res.setHeader(
