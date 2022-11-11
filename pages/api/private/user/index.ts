@@ -1,8 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import privateHandler from "../../../../src/middleware/authMiddleware";
+import privateHandler from "../../../../src/middleware/authMiddlewareHandler";
 
-privateHandler.get((req: NextApiRequest, res: NextApiResponse) => {
-  res.send("hi");
-});
+const handler = privateHandler.get(
+  (req: NextApiRequest, res: NextApiResponse) => {
+    res.send("hi");
+  }
+);
 
-export default privateHandler;
+export default handler;

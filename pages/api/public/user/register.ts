@@ -5,19 +5,13 @@ import User from "../../../../src/models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
+import defaultHandler from "../../../../src/middleware/defaultHandler";
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 
-const handler = nc()
-  .use(async (req: NextApiRequest, res: NextApiResponse, next) => {
-    await dbConnect();
-    next();
-  })
-  // @desc      Register a new user
-  // @route     Post /api/public/user/register
-  // @access    Public
-  .post(async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = defaultHandler.post(
+  async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, email, password } = req.body;
     const user = await User.findOne({ email });
 
@@ -55,6 +49,7 @@ const handler = nc()
     } catch (error) {
       return res.status(400).json(error);
     }
-  });
+  }
+);
 
 export default handler;
