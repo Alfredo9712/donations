@@ -44,7 +44,10 @@ const handler = nc()
         "Set-Cookie",
         cookie.serialize("AUTH_TOKEN", token, {
           httpOnly: true,
-          maxAge: Math.floor(Date.now() / 1000) + 60 * 60,
+          maxAge: 8 * 60 * 60,
+          path: "/",
+          sameSite: "lax",
+          secure: process.env.NODE_ENV === "production",
         })
       );
 
