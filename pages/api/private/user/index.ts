@@ -1,9 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import privateHandler from "../../../../src/middleware/authMiddlewareHandler";
-
+import privateHandler, {
+  ExtendedNextApiRequest,
+} from "../../../../src/middleware/authMiddlewareHandler";
+import User from "../../../../src/models/userModel";
 const handler = privateHandler.get(
-  (req: NextApiRequest, res: NextApiResponse) => {
-    res.send("hi");
+  async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
+    const user = await User.findById({ _id: req.id });
+    return res.status(200).json(user);
   }
 );
 

@@ -29,7 +29,8 @@ const handler = defaultHandler
 
       const token = await jwt.sign(
         {
-          data: { email, _id: newUser._id },
+          email,
+          _id: newUser._id,
         },
         process.env.JWT_SECRET as string,
         { expiresIn: Math.floor(Date.now() / 1000) + 60 * 60 }
