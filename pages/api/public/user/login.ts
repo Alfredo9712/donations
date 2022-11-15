@@ -13,6 +13,8 @@ const handler = defaultHandler.post(
     try {
       if (!user)
         return res.status(400).json({ message: "Invalid Credentials" });
+
+      const match = bcrypt.compare(password, user.password);
     } catch (error) {
       res.status(400).json(error);
     }
