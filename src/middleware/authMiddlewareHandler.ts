@@ -20,6 +20,7 @@ authMiddlewareHandler.use(
         code: 100,
         message: "Not Authorized",
       });
+
     try {
       const decoded = jwt.verify(
         token,
