@@ -11,10 +11,15 @@ const handler = defaultHandler.post(
     const user = await User.findOne({ email });
 
     try {
-      if (!user)
+      if (!user) {
         return res.status(400).json({ message: "Invalid Credentials" });
+      }
 
-      const match = bcrypt.compare(password, user.password);
+      const match = await bcrypt.compare(password, user.password);
+
+      if (!match) {
+        return res.status(400).json({ message: "Invalid Credentials" });
+      }
     } catch (error) {
       res.status(400).json(error);
     }

@@ -47,7 +47,7 @@ const handler = defaultHandler
         })
       );
 
-      return res.status(200).json({ newUser });
+      return res.status(200).json(newUser);
     } catch (error) {
       return res.status(400).json(error);
     }
