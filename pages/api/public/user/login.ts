@@ -5,8 +5,11 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import defaultHandler from "../../../../src/middleware/defaultHandler";
 
-const handler = defaultHandler.post(
-  async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = defaultHandler
+  // @desc      Login User
+  // @route     POST /api/public/user/login
+  // @access    Public
+  .post(async (req: NextApiRequest, res: NextApiResponse) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
@@ -20,13 +23,31 @@ const handler = defaultHandler.post(
       if (!match) {
         return res.status(400).json({ message: "Invalid Credentials" });
       }
+
+      const token = jwt.sign(
+        {
+          email,
+          _id: user._id,
+        },
+        process.env.JWT_SECRET as string,
+        { expiresIn: Math.floor(Date.now() / 1000) + 60 * 60 }
+      );
+
+      res.setHeader(
+        "Set-Cookie",
+        cookie.serialize("AUTH_TOKEN", token, {
+          httpOnly: true,
+          maxAge: 8 * 60 * 60,
+          path: "/",
+          sameSite: "lax",
+          secure: process.env.NODE_ENV === "production",
+        })
+      );
+
+      return res.status(200).json(user);
     } catch (error) {
       res.status(400).json(error);
     }
-  }
-);
-// @desc      Login User
-// @route     POST /api/public/user/login
-// @access    Public
+  });
 
 export default handler;

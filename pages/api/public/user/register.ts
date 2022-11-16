@@ -27,7 +27,7 @@ const handler = defaultHandler
         password: hashedPassword,
       });
 
-      const token = await jwt.sign(
+      const token = jwt.sign(
         {
           email,
           _id: newUser._id,
