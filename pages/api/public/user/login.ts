@@ -18,9 +18,9 @@ const handler = defaultHandler
         return res.status(400).json({ message: "Invalid Credentials" });
       }
 
-      const match = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      if (!match) {
+      if (!isMatch) {
         return res.status(400).json({ message: "Invalid Credentials" });
       }
 
