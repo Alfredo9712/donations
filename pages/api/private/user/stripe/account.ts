@@ -1,7 +1,7 @@
-import { ExtendedNextApiRequest } from "../../../../types/ExtendedNextApiRequest";
+import { ExtendedNextApiRequest } from "../../../../../types/ExtendedNextApiRequest";
 import { NextApiResponse } from "next";
-import privateHandler from "../../../../src/middleware/authMiddlewareHandler";
-import User from "../../../../src/models/userModel";
+import privateHandler from "../../../../../src/middleware/authMiddlewareHandler";
+import User from "../../../../../src/models/userModel";
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2022-11-15",
@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
 
 const handler = privateHandler
   // @desc      Create Stripe connected account and save stripe account number to user
-  // @route     POST /api/private/user/stripe
+  // @route     POST /api/private/user/stripe/account
   // @access    Private
   .post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
     const { country } = req.body;
