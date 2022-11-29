@@ -7,15 +7,25 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2022-11-15",
 });
 
-// const stripe = new Stripe('stripe', process.env.STRIPE_SECRET )
-
 const handler = privateHandler
-  // @desc      Return user requesting the API
-  // @route     GET /api/private/user
+  // @desc      Create Stripe connected account
+  // @route     POST /api/private/user/stripe
   // @access    Private
-  .get(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
-    const account = await stripe.accounts.create({ type: "express" });
-    // return res.status(200).json(user);
+  .post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
+    const { country } = req.body;
+    const user = await User.findById({ _id: req.id });
+    const account = await stripe.accounts.create({
+      type: "custom",
+      country,
+      email: user.email,
+      capabilities: {
+        card_payments: { requested: true },
+        transfers: { requested: true },
+      },
+    });
+
+    return res.status(200).json(account);
   });
 
 export default handler;
+//
