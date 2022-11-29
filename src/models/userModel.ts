@@ -18,6 +18,10 @@ const UserSchema = new Schema<IUser>({
   donation: {
     price: String,
   },
+  stripeAccountNumber: {
+    type: String,
+    unique: true,
+  },
 });
 
 const User = mongoose.models.User || model<IUser>("User", UserSchema);

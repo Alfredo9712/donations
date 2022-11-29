@@ -8,25 +8,30 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
 });
 
 const handler = privateHandler
-  // @desc      Create Stripe connected account
+  // @desc      Create Stripe connected account and save stripe account number to user
   // @route     POST /api/private/user/stripe
   // @access    Private
   .post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
     const { country } = req.body;
     const user = await User.findById({ _id: req.id });
-    const account = await stripe.accounts.create({
-      type: "custom",
-      country,
-      email: user.email,
-      capabilities: {
-        card_payments: { requested: true },
-        transfers: { requested: true },
-      },
-    });
-    //TODO: ADD stripe id to user and call account links endpoint
-
-    return res.status(200).json(account);
+    // create stripe connect account
+    try {
+      const account = await stripe.accounts.create({
+        type: "custom",
+        country,
+        email: user.email,
+        capabilities: {
+          card_payments: { requested: true },
+          transfers: { requested: true },
+        },
+      });
+      // save stripe account number to user
+      user.stripeAccountNumber = account.id;
+      await user.save();
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
   });
 
 export default handler;
-//
