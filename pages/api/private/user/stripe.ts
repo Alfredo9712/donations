@@ -23,6 +23,7 @@ const handler = privateHandler
         transfers: { requested: true },
       },
     });
+    //TODO: ADD stripe id to user and call account links endpoint
 
     return res.status(200).json(account);
   });
