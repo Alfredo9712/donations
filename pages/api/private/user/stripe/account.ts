@@ -1,13 +1,18 @@
 import { ExtendedNextApiRequest } from "../../../../../types/ExtendedNextApiRequest";
-import { NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import privateHandler from "../../../../../src/middleware/authMiddlewareHandler";
 import User from "../../../../../src/models/userModel";
 import Stripe from "stripe";
+import dbConnect from "../../../../../src/middleware/dbConnect";
 const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2022-11-15",
 });
 
 const handler = privateHandler
+  .use(async (req: NextApiRequest, res: NextApiResponse, next) => {
+    await dbConnect();
+    next();
+  })
   // @desc      Create Stripe connected account and save stripe account number to user
   // @route     POST /api/private/user/stripe/account
   // @access    Private

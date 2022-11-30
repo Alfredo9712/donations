@@ -1,11 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import cookie from "cookie";
-import privateHandler from "../../../../src/middleware/authMiddlewareHandler";
-
-const handler = privateHandler
+import nc from "next-connect";
+const handler = nc()
   // @desc      Set cookie to an expired date and logout user
   // @route     POST /api/private/user/logout
-  // @access    Private
+  // @access    Public
   .post((req: NextApiRequest, res: NextApiResponse) => {
     res.setHeader(
       "Set-Cookie",
