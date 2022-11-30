@@ -3,12 +3,17 @@ import User from "../../../../src/models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
-import defaultHandler from "../../../../src/middleware/defaultHandler";
+import nc from "next-connect";
+import dbConnect from "../../../../src/middleware/dbConnect";
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 
-const handler = defaultHandler
+const handler = nc()
+  .use(async (req: NextApiRequest, res: NextApiResponse, next) => {
+    await dbConnect();
+    next();
+  })
   // @desc      Register a new user
   // @route     POST /api/public/user/register
   // @access    Public

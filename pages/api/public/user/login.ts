@@ -3,9 +3,13 @@ import User from "../../../../src/models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
-import defaultHandler from "../../../../src/middleware/defaultHandler";
-
-const handler = defaultHandler
+import nc from "next-connect";
+import dbConnect from "../../../../src/middleware/dbConnect";
+const handler = nc()
+  .use(async (req: NextApiRequest, res: NextApiResponse, next) => {
+    await dbConnect();
+    next();
+  })
   // @desc      Login User
   // @route     POST /api/public/user/login
   // @access    Public
