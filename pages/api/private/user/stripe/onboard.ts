@@ -16,8 +16,8 @@ const handler = privateHandler
     try {
       const accountLink = await stripe.accountLinks.create({
         account: user.stripeAccountNumber,
-        refresh_url: "https://example.com/reauth",
-        return_url: "https://example.com/return",
+        refresh_url: "http://localhost:3000/account-create",
+        return_url: "http://localhost:3000/account-successful",
         type: "account_onboarding",
       });
       await user.save();
