@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import cookie from "cookie";
 import nc from "next-connect";
+
 const handler = nc()
   // @desc      Set cookie to an expired date and logout user
   // @route     POST /api/private/user/logout

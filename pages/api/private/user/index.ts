@@ -4,6 +4,7 @@ import User from "../../../../src/models/userModel";
 import dbConnect from "../../../../src/middleware/dbConnect";
 import nc from "next-connect";
 import authMiddleware from "../../../../src/middleware/authMiddlewareHandler";
+
 const handler = nc()
   .use(async (req: NextApiRequest, res: NextApiResponse, next) => {
     await dbConnect();

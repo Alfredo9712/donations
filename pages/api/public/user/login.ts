@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import nc from "next-connect";
 import dbConnect from "../../../../src/middleware/dbConnect";
+
 const handler = nc()
   .use(async (req: NextApiRequest, res: NextApiResponse, next) => {
     await dbConnect();
