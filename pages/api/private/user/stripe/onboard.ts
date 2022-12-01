@@ -1,22 +1,25 @@
 import { ExtendedNextApiRequest } from "../../../../../types/ExtendedNextApiRequest";
 import { NextApiRequest, NextApiResponse } from "next";
-import privateHandler from "../../../../../src/middleware/authMiddlewareHandler";
 import User from "../../../../../src/models/userModel";
 import Stripe from "stripe";
 import dbConnect from "../../../../../src/middleware/dbConnect";
+import nc from "next-connect";
+import authMiddleware from "../../../../../src/middleware/authMiddlewareHandler";
 const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2022-11-15",
 });
 
-const handler = privateHandler
+const handler = nc()
   .use(async (req: NextApiRequest, res: NextApiResponse, next) => {
     await dbConnect();
     next();
   })
+  .use(authMiddleware)
   // @desc      Retrieve link from stripe to send user to onboarding process
   // @route     POST /api/private/user/stripe/onboard
   // @access    Private
   .post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
+    res.send("hi");
     const user = await User.findById({ _id: req.id });
     try {
       const accountLink = await stripe.accountLinks.create({
