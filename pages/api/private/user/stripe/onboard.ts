@@ -14,12 +14,15 @@ const handler = nc()
     await dbConnect();
     next();
   })
-  .use(authMiddleware)
+  .use(async (req: ExtendedNextApiRequest, res: NextApiResponse, next) => {
+    await authMiddleware(req, res);
+    next();
+  })
   // @desc      Retrieve link from stripe to send user to onboarding process
   // @route     POST /api/private/user/stripe/onboard
   // @access    Private
   .post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
-    res.send("hi");
+    res.send("onboard");
     const user = await User.findById({ _id: req.id });
     try {
       const accountLink = await stripe.accountLinks.create({
