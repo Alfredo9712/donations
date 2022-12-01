@@ -22,7 +22,6 @@ const handler = nc()
   // @route     POST /api/private/user/stripe/onboard
   // @access    Private
   .post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
-    res.send("onboard");
     const user = await User.findById({ _id: req.id });
     try {
       const accountLink = await stripe.accountLinks.create({

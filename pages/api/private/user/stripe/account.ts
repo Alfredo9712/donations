@@ -22,7 +22,6 @@ const handler = nc()
   // @route     POST /api/private/user/stripe/account
   // @access    Private
   .post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
-    res.send("account");
     const { country } = req.body;
     const user = await User.findById({ _id: req.id });
     // create stripe connect account
