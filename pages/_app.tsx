@@ -1,12 +1,12 @@
 import React from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { UserProvider } from "../src/context/UserContext";
+import { AuthContextProvider } from "../src/context/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <UserProvider>
+    <AuthContextProvider>
       <Component {...pageProps} />
-    </UserProvider>
+    </AuthContextProvider>
   );
 }
