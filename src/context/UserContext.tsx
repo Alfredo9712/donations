@@ -27,7 +27,7 @@ const userReducer = (state: UserContext, action: Action) => {
   }
 };
 
-export const UserProvider = ({ children }: Children) => {
+const UserProvider = ({ children }: Children) => {
   const [state, dispatch] = useReducer(userReducer, {
     user: null,
   });
@@ -41,7 +41,7 @@ const useUserContext = () => {
   if (context === undefined) {
     throw new Error("useUserContect must be used within a UserProvider");
   }
-  return context;
+  return { user: context.state.user, dispatch: context.dispatch };
 };
 
-export default { UserProvider, useUserContext };
+export { UserProvider, useUserContext };
