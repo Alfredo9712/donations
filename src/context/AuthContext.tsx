@@ -21,6 +21,11 @@ const userReducer = (state: UserContext, action: Action) => {
         },
       };
     }
+    case "logout": {
+      return {
+        user: null,
+      };
+    }
     default: {
       return state;
     }
