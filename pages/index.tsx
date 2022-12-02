@@ -11,6 +11,7 @@ export default function Home() {
       <h1>Donations</h1>
       <h1>Test Context login here</h1>
       <button onClick={() => dispatch({ type: "login" })}>Login</button>
+      <button onClick={() => dispatch({ type: "logout" })}>Login</button>
     </div>
   );
 }

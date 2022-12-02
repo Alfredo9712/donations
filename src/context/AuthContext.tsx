@@ -3,14 +3,14 @@ import {
   Action,
   Children,
   Dispatch,
-  UserContext,
+  AuthContextType,
 } from "../../types/ContextTypes";
 
 const AuthContext = createContext<
-  { state: UserContext; dispatch: Dispatch } | undefined
+  { state: AuthContextType; dispatch: Dispatch } | undefined
 >(undefined);
 
-const userReducer = (state: UserContext, action: Action) => {
+const userReducer = (state: AuthContextType, action: Action) => {
   switch (action.type) {
     case "login": {
       return {
