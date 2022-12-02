@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import {
   Action,
   Children,
@@ -31,7 +31,7 @@ const AuthContextProvider = ({ children }: Children) => {
   const [state, dispatch] = useReducer(userReducer, {
     user: null,
   });
-
+  console.log(state);
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       {children}
@@ -39,12 +39,4 @@ const AuthContextProvider = ({ children }: Children) => {
   );
 };
 
-const useUserContext = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useUserContect must be used within a UserProvider");
-  }
-  return { user: context.state.user, dispatch: context.dispatch };
-};
-
-export { AuthContextProvider, useUserContext };
+export { AuthContextProvider, AuthContext };

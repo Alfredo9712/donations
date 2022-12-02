@@ -1,10 +1,10 @@
 import React from "react";
-import { useUserContext } from "../src/context/AuthContext";
+import { useAuthContext } from "../src/hooks/useAuthContext";
 
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  const { dispatch } = useUserContext();
+  const { dispatch } = useAuthContext();
 
   return (
     <div className={styles.container}>
