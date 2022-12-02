@@ -15,11 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/middleware/dbConnect.js"
-  ],
+  "include": ["next-env.d.ts", "src/middleware/dbConnect.js"],
   "exclude": ["node_modules"]
 }
