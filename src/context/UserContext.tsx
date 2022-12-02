@@ -1,0 +1,39 @@
+import React, { createContext, useReducer } from "react";
+import {
+  Action,
+  Children,
+  Dispatch,
+  UserContext,
+} from "../../types/ContextTypes";
+
+const UserContext = createContext<
+  { state: UserContext; dispatch: Dispatch } | undefined
+>(undefined);
+
+const userReducer = (state: UserContext, action: Action) => {
+  switch (action.type) {
+    case "login": {
+      return {
+        user: {
+          name: "alfredo",
+          email: "alfredo98.rm@gmail.com",
+          password: "232",
+        },
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const UserProvider = ({ children }: Children) => {
+  const [state, dispatch] = useReducer(userReducer, {
+    user: null,
+  });
+  console.log(state);
+  const value = { state, dispatch };
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+};
+
+export { UserProvider };
