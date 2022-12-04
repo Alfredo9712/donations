@@ -5,16 +5,24 @@ import { Field, Formik } from "formik";
 import * as Yup from "yup";
 
 import styles from "../styles/Home.module.css";
+import { useAuthHook } from "../src/hooks/useAuthHook";
 
 export default function Home() {
+  const { signUp, error } = useAuthHook();
+  const { message } = error || "";
+  console.log(message);
   const validationSchema = Yup.object({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
     password: Yup.string().required(),
   });
 
-  const handleSubmit = (values: { name: string; email: string }) => {
-    console.log(values);
+  const handleSubmit = async (values: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
+    await signUp(values);
   };
 
   return (
@@ -38,7 +46,7 @@ export default function Home() {
                 <FormLabel htmlFor="Email">Email</FormLabel>
                 <Field as={Input} name="email" />
                 <FormLabel htmlFor="Email">Password</FormLabel>
-                <Field as={Input} name="password" />
+                <Field as={Input} name="password" type="password" />
               </FormControl>
               <Button isDisabled={!isValid} type="submit">
                 Submit

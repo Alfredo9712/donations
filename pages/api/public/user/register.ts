@@ -22,7 +22,7 @@ const handler = nc()
     const user = await User.findOne({ email });
 
     try {
-      if (user) return res.status(200).json({ message: "user already exists" });
+      if (user) return res.status(500).json({ message: "user already exists" });
 
       const hashedPassword = bcrypt.hashSync(password, salt);
 
