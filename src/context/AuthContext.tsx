@@ -14,11 +14,7 @@ const userReducer = (state: AuthContextType, action: Action) => {
   switch (action.type) {
     case "login": {
       return {
-        user: {
-          name: "alfredo",
-          email: "alfredo98.rm@gmail.com",
-          password: "232",
-        },
+        user: action.payload,
       };
     }
     case "logout": {
