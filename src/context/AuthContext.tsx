@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import {
-  Action,
+  AuthAction,
   Children,
   Dispatch,
   AuthContextType,
@@ -10,7 +10,7 @@ const AuthContext = createContext<
   { state: AuthContextType; dispatch: Dispatch } | undefined
 >(undefined);
 
-const userReducer = (state: AuthContextType, action: Action) => {
+const userReducer = (state: AuthContextType, action: AuthAction) => {
   switch (action.type) {
     case "login": {
       return {
