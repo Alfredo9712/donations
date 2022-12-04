@@ -17,6 +17,11 @@ const userReducer = (state: AuthContextType, action: AuthAction) => {
         user: action.payload,
       };
     }
+    case "signup": {
+      return {
+        user: action.payload,
+      };
+    }
     case "logout": {
       return {
         user: null,
