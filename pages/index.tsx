@@ -1,33 +1,25 @@
-import React, { FormEvent, useState } from "react";
+import React from "react";
 import { useAuthContext } from "../src/hooks/useAuthContext";
-import {
-  Input,
-  Box,
-  Flex,
-  Button,
-  FormControl,
-  FormLabel,
-} from "@chakra-ui/react";
-import { Field, Form, Formik, FieldInputProps, FormikProps } from "formik";
+import { Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
+import { Field, Formik } from "formik";
 import * as Yup from "yup";
 
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  const { dispatch } = useAuthContext();
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
-
-  const handleSubmit = (event: FormEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log(event);
-    console.log("hi");
-  };
+  const {
+    state: { user },
+  } = useAuthContext();
+  console.log(user);
 
   const validationSchema = Yup.object({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
-    passsword: Yup.string().required(),
   });
+
+  const handleSubmit = (values: { name: string; email: string }) => {
+    console.log(values);
+  };
 
   return (
     <div className={styles.container}>
@@ -36,21 +28,23 @@ export default function Home() {
       <Formik
         initialValues={{ name: "", email: "" }}
         validationSchema={validationSchema}
+        validateOnMount
         onSubmit={(values) => {
-          console.log(values);
+          handleSubmit(values);
         }}
       >
-        {({ handleSubmit, errors, touched, values, isValid }) => {
-          console.log(values);
+        {({ handleSubmit, isValid }) => {
           return (
-            <form>
+            <form onSubmit={handleSubmit}>
               <FormControl>
                 <FormLabel htmlFor="Name">Name</FormLabel>
                 <Field as={Input} name="name" />
                 <FormLabel htmlFor="Email">Email</FormLabel>
                 <Field as={Input} name="email" />
               </FormControl>
-              <Button isDisabled={isValid}>Submit</Button>
+              <Button isDisabled={!isValid} type="submit">
+                Submit
+              </Button>
             </form>
           );
         }}

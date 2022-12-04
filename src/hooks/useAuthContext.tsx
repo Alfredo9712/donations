@@ -6,5 +6,5 @@ export const useAuthContext = () => {
   if (context === undefined) {
     throw new Error("useUserContect must be used within a UserProvider");
   }
-  return { user: context.state.user, dispatch: context.dispatch };
+  return context;
 };
