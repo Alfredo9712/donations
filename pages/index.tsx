@@ -1,16 +1,21 @@
-import React from "react";
-
-import { Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { useAuthHook } from "../src/hooks/useAuthHook";
+import {
+  Input,
+  Button,
+  FormControl,
+  FormLabel,
+  useToast,
+} from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
 
 import styles from "../styles/Home.module.css";
-import { useAuthHook } from "../src/hooks/useAuthHook";
 
 export default function Home() {
-  const { signUp, error } = useAuthHook();
-  const { message } = error || "";
-  console.log(message);
+  const { signUp, error, setError } = useAuthHook();
+  const toast = useToast();
+
   const validationSchema = Yup.object({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
@@ -24,6 +29,20 @@ export default function Home() {
   }) => {
     await signUp(values);
   };
+
+  useEffect(() => {
+    if (error?.message) {
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      setError(null);
+    }
+  }, [error?.message]);
 
   return (
     <div className={styles.container}>
