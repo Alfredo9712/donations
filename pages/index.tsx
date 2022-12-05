@@ -27,7 +27,7 @@ export default function Home() {
     email: string;
     password: string;
   }) => {
-    await signUp(values);
+    await signUp(values, "login");
   };
 
   useEffect(() => {

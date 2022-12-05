@@ -3,20 +3,24 @@ import { useAuthContext } from "./useAuthContext";
 import axios, { AxiosError } from "axios";
 import { IUser } from "../../types/IUser";
 
-const baseUrl = "http://localhost:3000/api";
+const apiUrl = "http://localhost:3000/api";
+
 export const useAuthHook = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<{ message: string } | null>();
   const { dispatch } = useAuthContext();
-  const signUp = async (body: {
-    name: string;
-    email: string;
-    password: string;
-  }) => {
+  const signUp = async (
+    body: {
+      name: string;
+      email: string;
+      password: string;
+    },
+    method: "login" | "register"
+  ) => {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        `${baseUrl}/public/user/register`,
+        `${apiUrl}/public/user/${method}`,
         body
       );
       const data: IUser = response.data;
