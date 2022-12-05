@@ -5,10 +5,13 @@ import {
   Dispatch,
   AuthContextType,
 } from "../../types/ContextTypes";
+import { useQuery } from "react-query";
+import { getUser } from "../fetchers/getUser";
+import { IUser } from "../../types/IUser";
 
-const AuthContext = createContext<
-  { state: AuthContextType; dispatch: Dispatch } | undefined
->(undefined);
+const AuthContext = createContext<{ user: IUser | undefined } | undefined>(
+  undefined
+);
 
 const userReducer = (state: AuthContextType, action: AuthAction) => {
   switch (action.type) {
@@ -34,14 +37,14 @@ const userReducer = (state: AuthContextType, action: AuthAction) => {
 };
 
 const AuthContextProvider = ({ children }: Children) => {
+  const { data: user, error: queryError } = useQuery("user", getUser);
+
   const [state, dispatch] = useReducer(userReducer, {
     user: null,
   });
-  console.log(state);
+  // console.log(state);
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 };
 

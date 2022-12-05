@@ -14,6 +14,7 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const { signUp, error, setError } = useAuthHook();
+
   const toast = useToast();
 
   const validationSchema = Yup.object({

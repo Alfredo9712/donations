@@ -8,7 +8,8 @@ const apiUrl = "http://localhost:3000/api";
 export const useAuthHook = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<{ message: string } | null>();
-  const { dispatch } = useAuthContext();
+  // const { dispatch } = useAuthContext();
+
   const signUp = async (
     body: {
       name: string;
@@ -24,7 +25,7 @@ export const useAuthHook = () => {
         body
       );
       const data: IUser = response.data;
-      dispatch({ type: "login", payload: data });
+      // dispatch({ type: "login", payload: data });
       setIsLoading(false);
     } catch (err) {
       const errors = err as Error | AxiosError;
