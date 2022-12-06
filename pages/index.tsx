@@ -14,7 +14,7 @@ import * as Yup from "yup";
 import { useMutation } from "react-query";
 
 export default function Home() {
-  const { user, refetch, error } = useAuthContext();
+  const { user, refetch } = useAuthContext();
   const mutation = useMutation(
     (body: { name: string; email: string; password: string }) => {
       return axios.post(`http://localhost:3000/api/public/user/login`, body);
@@ -23,10 +23,26 @@ export default function Home() {
       onSuccess: () => {
         refetch();
       },
+      onError: (error: {
+        response: {
+          data: {
+            message: string;
+          };
+        };
+      }) => {
+        toast({
+          title: "Error",
+          description: error.response.data.message,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+      },
     }
   );
   const toast = useToast();
-  console.log(error);
+
   const validationSchema = Yup.object({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
@@ -38,23 +54,8 @@ export default function Home() {
     email: string;
     password: string;
   }) => {
-    // await signUp(values, "login");
     mutation.mutate(values);
   };
-
-  // useEffect(() => {
-  //   if (error?.message) {
-  //     toast({
-  //       title: "Error",
-  //       description: error.message,
-  //       status: "error",
-  //       duration: 2000,
-  //       isClosable: true,
-  //       position: "top",
-  //     });
-  //     setError(null);
-  //   }
-  // }, [error?.message]);
 
   return (
     <div>
