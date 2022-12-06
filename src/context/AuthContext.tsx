@@ -1,50 +1,32 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext } from "react";
+import { Children } from "../../types/ContextTypes";
 import {
-  AuthAction,
-  Children,
-  Dispatch,
-  AuthContextType,
-} from "../../types/ContextTypes";
-import { useQuery } from "react-query";
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+  useQuery,
+} from "react-query";
 import { getUser } from "../fetchers/getUser";
 import { IUser } from "../../types/IUser";
 
-const AuthContext = createContext<{ user: IUser | undefined } | undefined>(
-  undefined
-);
-
-const userReducer = (state: AuthContextType, action: AuthAction) => {
-  switch (action.type) {
-    case "login": {
-      return {
-        user: action.payload,
-      };
+const AuthContext = createContext<
+  | {
+      user: IUser | undefined;
+      refetch: <TPageData>(
+        options?: RefetchOptions & RefetchQueryFilters<TPageData>
+      ) => Promise<QueryObserverResult<any, unknown>>;
+      error: unknown;
     }
-    case "signup": {
-      return {
-        user: action.payload,
-      };
-    }
-    case "logout": {
-      return {
-        user: null,
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+  | undefined
+>(undefined);
 
 const AuthContextProvider = ({ children }: Children) => {
-  const { data: user, error: queryError } = useQuery("user", getUser);
-
-  const [state, dispatch] = useReducer(userReducer, {
-    user: null,
-  });
-  // console.log(state);
+  const { data: user, refetch, error } = useQuery("user", getUser);
+  console.log(user);
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, refetch, error }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
