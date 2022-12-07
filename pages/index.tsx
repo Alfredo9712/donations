@@ -13,8 +13,9 @@ import * as Yup from "yup";
 import { useMutation, useQueryClient } from "react-query";
 
 export default function Home() {
-  const { user, refetch, isLoading } = useAuthContext();
+  const { user, isLoading } = useAuthContext();
   const client = useQueryClient();
+  const toast = useToast();
   const mutation = useMutation(
     (body: { name: string; email: string; password: string }) => {
       return axios.post(`http://localhost:3000/api/public/user/login`, body);
@@ -41,13 +42,26 @@ export default function Home() {
       },
     }
   );
-  const toast = useToast();
 
+  const logoutMutation = useMutation(
+    () => {
+      return axios.post(`http://localhost:3000/api/public/user/logout`);
+    },
+    {
+      onSuccess: () => {
+        client.invalidateQueries("user");
+      },
+    }
+  );
   const validationSchema = Yup.object({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
     password: Yup.string().required(),
   });
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
 
   const handleSubmit = async (values: {
     name: string;
@@ -88,6 +102,7 @@ export default function Home() {
           );
         }}
       </Formik>
+      <Button onClick={handleLogout}>Logout</Button>
     </div>
   );
 }
