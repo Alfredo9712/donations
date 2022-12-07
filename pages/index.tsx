@@ -10,18 +10,18 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
-
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 export default function Home() {
-  const { user, refetch } = useAuthContext();
+  const { user, refetch, isLoading } = useAuthContext();
+  const client = useQueryClient();
   const mutation = useMutation(
     (body: { name: string; email: string; password: string }) => {
       return axios.post(`http://localhost:3000/api/public/user/login`, body);
     },
     {
       onSuccess: () => {
-        refetch();
+        client.invalidateQueries("user");
       },
       onError: (error: {
         response: {
@@ -81,7 +81,7 @@ export default function Home() {
                 <FormLabel htmlFor="Email">Password</FormLabel>
                 <Field as={Input} name="password" type="password" />
               </FormControl>
-              <Button isDisabled={!isValid} type="submit">
+              <Button isDisabled={!isValid || isLoading} type="submit">
                 Submit
               </Button>
             </form>

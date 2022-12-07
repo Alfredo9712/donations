@@ -16,15 +16,16 @@ const AuthContext = createContext<
         options?: RefetchOptions & RefetchQueryFilters<TPageData>
       ) => Promise<QueryObserverResult<any, unknown>>;
       error: unknown;
+      isLoading: boolean;
     }
   | undefined
 >(undefined);
 
 const AuthContextProvider = ({ children }: Children) => {
-  const { data: user, refetch, error } = useQuery("user", getUser);
+  const { data: user, refetch, error, isLoading } = useQuery("user", getUser);
   console.log(user);
   return (
-    <AuthContext.Provider value={{ user, refetch, error }}>
+    <AuthContext.Provider value={{ user, refetch, error, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
