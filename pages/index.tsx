@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 export default function Home() {
   const { user, isLoading } = useAuthContext();
+
   const client = useQueryClient();
   const toast = useToast();
   const mutation = useMutation(
@@ -74,8 +75,10 @@ export default function Home() {
   return (
     <div>
       <h1>Donations</h1>
-      <h1>{user?.name}</h1>
       <h1>Test Context login here</h1>
+      <div>
+        <h1>{!user?._id ? "Not Authed" : "Authed"}</h1>
+      </div>
       <Formik
         initialValues={{ name: "", email: "", password: "" }}
         validationSchema={validationSchema}
