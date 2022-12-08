@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import AuthContextProvider from "../src/context/AuthContext";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Container } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -12,7 +12,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
         <ChakraProvider>
-          <Component {...pageProps} />
+          <Container maxW="1250px">
+            <Component {...pageProps} />
+          </Container>
         </ChakraProvider>
       </AuthContextProvider>
     </QueryClientProvider>
