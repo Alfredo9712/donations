@@ -11,7 +11,7 @@ import {
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "react-query";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../src/hooks/useAuthContext";
 
 export default function TempAuthRoute() {
   const { user, isLoading } = useAuthContext();
