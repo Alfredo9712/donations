@@ -1,10 +1,9 @@
 import React from "react";
-import AuthContent from "../src/content/AuthContent";
+import { useQuery } from "react-query";
+import { getUser } from "../src/fetchers/getUser";
 
 export default function Home() {
-  return (
-    <h1>
-      <AuthContent />
-    </h1>
-  );
+  const { data: user, refetch, error, isLoading } = useQuery("user", getUser);
+
+  return <h1>Donations</h1>;
 }

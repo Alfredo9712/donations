@@ -11,12 +11,13 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
-import { useMutation, useQueryClient } from "react-query";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+
+import { getUser } from "../../fetchers/getUser";
 
 const AuthContent = () => {
-  const { user, isLoading } = useAuthContext();
-
+  const { data: user, refetch, error, isLoading } = useQuery("user", getUser);
+  console.log(user);
   const client = useQueryClient();
   const toast = useToast();
   const mutation = useMutation(
@@ -95,7 +96,7 @@ const AuthContent = () => {
                 <FormLabel htmlFor="Email">Password</FormLabel>
                 <Field as={Input} name="password" type="password" />
               </FormControl>
-              <Button isDisabled={!isValid || isLoading} type="submit">
+              <Button isDisabled={!isValid} type="submit">
                 Submit
               </Button>
             </form>

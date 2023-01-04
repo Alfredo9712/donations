@@ -5,8 +5,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import Navbar from "../componets/Navbar";
 
-import AuthContextProvider from "../src/context/AuthContext";
-
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -14,14 +12,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
-        <ChakraProvider>
-          <Container maxW="1200px">
-            <Navbar />
-            <Component {...pageProps} />
-          </Container>
-        </ChakraProvider>
-      </AuthContextProvider>
+      <ChakraProvider>
+        <Container maxW="1200px">
+          <Navbar />
+          <Component {...pageProps} />
+        </Container>
+      </ChakraProvider>
     </QueryClientProvider>
   );
 }
