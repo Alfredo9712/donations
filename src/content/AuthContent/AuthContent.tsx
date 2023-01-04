@@ -1,5 +1,4 @@
 import React from "react";
-
 import axios from "axios";
 import {
   Input,
@@ -11,12 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
-import { getUser } from "../../fetchers/getUser";
+import useGetUser from "../../hooks/useGetUser";
 
 const AuthContent = () => {
-  const { data: user, refetch, error, isLoading } = useQuery("user", getUser);
+  const { user } = useGetUser();
   console.log(user);
   const client = useQueryClient();
   const toast = useToast();
