@@ -16,7 +16,7 @@ import useGetUser from "../../hooks/useGetUser";
 
 const AuthContent = () => {
   const { user } = useGetUser();
-  console.log(user);
+
   const client = useQueryClient();
   const toast = useToast();
   const mutation = useMutation(
@@ -56,6 +56,7 @@ const AuthContent = () => {
       },
     }
   );
+
   const validationSchema = Yup.object({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
