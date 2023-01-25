@@ -4,9 +4,9 @@ import { ChakraProvider, Container } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Navbar from "../componets/Navbar";
+import AuthWrapper from "../componets/AuthWrapper";
 
 import "../styles/globals.css";
-import AuthWrapper from "../componets/AuthWrapper/AuthWrapper";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
