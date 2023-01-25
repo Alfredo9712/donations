@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 import useGetUser from "../../src/hooks/useGetUser";
 
@@ -9,7 +9,7 @@ interface AuthWrapperProps {
 const AuthWrapper = ({ children }: AuthWrapperProps) => {
   const { user } = useGetUser();
   console.log(user);
-  return { children };
+  return <>{children}</>;
 };
 
 export default AuthWrapper;
