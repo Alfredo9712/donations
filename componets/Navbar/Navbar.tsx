@@ -7,14 +7,7 @@ const NavBar = () => {
     <Box>
       <Flex alignItems={"center"} justifyContent="space-between">
         <Box>
-          <Link href="/">
-            <Image
-              src="/images/donations.png"
-              alt="Donation logo"
-              width={70}
-              height={"auto"}
-            />
-          </Link>
+          <Link href="/">Donations</Link>
         </Box>
         <Box>
           <UnorderedList

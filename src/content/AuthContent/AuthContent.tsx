@@ -15,8 +15,6 @@ import { useMutation, useQueryClient } from "react-query";
 import useGetUser from "../../hooks/useGetUser";
 
 const AuthContent = () => {
-  const { user } = useGetUser();
-
   const client = useQueryClient();
   const toast = useToast();
   const mutation = useMutation(
