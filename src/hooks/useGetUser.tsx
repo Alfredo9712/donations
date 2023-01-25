@@ -11,6 +11,9 @@ function useGetUser() {
 
   return {
     user,
+    refetch,
+    error,
+    isLoading,
   };
 }
 

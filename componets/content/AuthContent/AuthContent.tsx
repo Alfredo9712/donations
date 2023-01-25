@@ -12,8 +12,6 @@ import { Field, Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "react-query";
 
-import useGetUser from "../../hooks/useGetUser";
-
 const AuthContent = () => {
   const client = useQueryClient();
   const toast = useToast();

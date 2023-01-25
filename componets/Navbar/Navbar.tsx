@@ -1,6 +1,6 @@
+import React from "react";
 import { Box, Flex, Image, ListItem, UnorderedList } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
 
 const NavBar = () => {
   return (
