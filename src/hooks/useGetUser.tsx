@@ -10,12 +10,14 @@ function useGetUser() {
     isLoading,
   } = useQuery<User>("user", getUserFetcher);
 
-  return {
-    user,
-    refetch,
-    error,
-    isLoading,
-  };
+  if (user?._id) {
+    return {
+      user,
+      refetch,
+      error,
+      isLoading,
+    };
+  }
 }
 
 export default useGetUser;

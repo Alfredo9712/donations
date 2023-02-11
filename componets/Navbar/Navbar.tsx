@@ -4,7 +4,7 @@ import Link from "next/link";
 import useGetUser from "../../src/hooks/useGetUser";
 
 const NavBar = () => {
-  const { user } = useGetUser();
+  const { user } = useGetUser() || {};
 
   return (
     <Box>

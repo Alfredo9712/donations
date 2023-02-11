@@ -22,7 +22,6 @@ const AuthContent = () => {
     {
       onSuccess: () => {
         client.invalidateQueries("user");
-        console.log("yes");
       },
       onError: (error: {
         response: {
