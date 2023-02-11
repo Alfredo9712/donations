@@ -14,12 +14,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
-        <AuthWrapper>
-          <Container maxW="1200px">
-            <Navbar />
-            <Component {...pageProps} />
-          </Container>
-        </AuthWrapper>
+        <Container maxW="1200px">
+          <Navbar />
+          <Component {...pageProps} />
+        </Container>
       </ChakraProvider>
     </QueryClientProvider>
   );

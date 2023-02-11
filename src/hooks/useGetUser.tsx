@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { User } from "../../types/UserType";
 import getUserFetcher from "../fetchers/getUser";
 
 function useGetUser() {
@@ -7,7 +8,7 @@ function useGetUser() {
     refetch,
     error,
     isLoading,
-  } = useQuery("user", getUserFetcher);
+  } = useQuery<User>("user", getUserFetcher);
 
   return {
     user,
