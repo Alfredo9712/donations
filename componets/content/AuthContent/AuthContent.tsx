@@ -7,13 +7,17 @@ import {
   FormLabel,
   useToast,
   Box,
+  Select,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "react-query";
+import useGetUser from "../../../src/hooks/useGetUser";
 
 const AuthContent = () => {
   const client = useQueryClient();
+  const { user } = useGetUser() || {};
+
   const toast = useToast();
   const mutation = useMutation(
     (body: { name: string; email: string; password: string }) => {
@@ -57,6 +61,7 @@ const AuthContent = () => {
     name: Yup.string().required(),
     email: Yup.string().email().required(),
     password: Yup.string().required(),
+    country: Yup.string().required(),
   });
 
   const handleLogout = () => {
@@ -74,14 +79,15 @@ const AuthContent = () => {
   return (
     <Box>
       <Formik
-        initialValues={{ name: "", email: "", password: "" }}
+        initialValues={{ name: "", email: "", password: "", country: "" }}
         validationSchema={validationSchema}
         validateOnMount
         onSubmit={(values) => {
           handleSubmit(values);
         }}
       >
-        {({ handleSubmit, isValid }) => {
+        {({ handleSubmit, isValid, values, setFieldValue }) => {
+          console.log(values);
           return (
             <form onSubmit={handleSubmit}>
               <FormControl>
@@ -92,7 +98,7 @@ const AuthContent = () => {
                 <FormLabel htmlFor="Email">Password</FormLabel>
                 <Field as={Input} name="password" type="password" />
               </FormControl>
-              <Button isDisabled={!isValid} type="submit">
+              <Button isDisabled={!isValid || !!user?._id} type="submit">
                 Submit
               </Button>
             </form>
