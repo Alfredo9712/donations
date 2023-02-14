@@ -25,7 +25,7 @@ const AuthContent = () => {
     },
     {
       onSuccess: () => {
-        refetch();
+        client.invalidateQueries("user");
       },
       onError: (error: {
         response: {
