@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
 import {
   Input,
@@ -8,24 +7,17 @@ import {
   FormLabel,
   useToast,
   Box,
-  Select,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "react-query";
 import useGetUser from "../../../src/hooks/useGetUser";
-
-const validationSchema = Yup.object({
-  name: Yup.string().required(),
-  email: Yup.string().email().required(),
-  password: Yup.string().required(),
-});
+import { useRouter } from "next/router";
 
 const AuthContent = () => {
   const client = useQueryClient();
+  const { user, refetch } = useGetUser();
   const router = useRouter();
-  const { user } = useGetUser() || {};
-
   const toast = useToast();
   const mutation = useMutation(
     (body: { name: string; email: string; password: string }) => {
@@ -33,8 +25,7 @@ const AuthContent = () => {
     },
     {
       onSuccess: () => {
-        client.invalidateQueries("user");
-        router.push("/onboard/country");
+        refetch();
       },
       onError: (error: {
         response: {
@@ -61,10 +52,17 @@ const AuthContent = () => {
     },
     {
       onSuccess: () => {
-        client.invalidateQueries("user");
+        client.removeQueries("user");
+        router.reload();
       },
     }
   );
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required(),
+    email: Yup.string().email().required(),
+    password: Yup.string().required(),
+  });
 
   const handleLogout = () => {
     logoutMutation.mutate();
@@ -88,8 +86,7 @@ const AuthContent = () => {
           handleSubmit(values);
         }}
       >
-        {({ handleSubmit, isValid, values, setFieldValue }) => {
-          console.log(values);
+        {({ handleSubmit, isValid }) => {
           return (
             <form onSubmit={handleSubmit}>
               <FormControl>

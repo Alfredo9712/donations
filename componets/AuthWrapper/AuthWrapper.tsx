@@ -7,7 +7,7 @@ interface AuthWrapperProps {
 }
 
 const AuthWrapper = ({ children }: AuthWrapperProps) => {
-  useGetUser();
+  // useGetUser();
 
   return <>{children}</>;
 };
